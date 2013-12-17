@@ -4,6 +4,5 @@
     <string name="app_name">Android Class</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-	<string name="to_linear_layout">Click to go to Linear Layout</string>
     
 </resources>

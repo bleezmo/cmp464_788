@@ -1,2 +1,1 @@
-* [Layouts](https://github.com/bleezmo/cmp464_788/wiki/Layouts)
-* [Layout Types](https://github.com/bleezmo/cmp464_788/wiki/Layout-Types)
+* [Basic Lists](https://github.com/bleezmo/cmp464_788/wiki/Basic-Lists)

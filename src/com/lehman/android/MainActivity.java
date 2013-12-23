@@ -18,7 +18,7 @@ public class MainActivity extends Activity {
         new Thread(new Runnable(){
 			@Override
 			public void run() {
-				Downloader.download("http://feeds.reuters.com/reuters/scienceNews?format=xml");
+				Downloader.downloadBytes("http://theoutlawlife.files.wordpress.com/2013/01/oh-the-huge-manatee.jpg");
 			}
         }).start();
     }

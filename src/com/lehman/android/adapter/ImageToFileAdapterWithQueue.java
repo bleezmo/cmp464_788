@@ -1,4 +1,4 @@
-package com.lehman.android;
+package com.lehman.android.adapter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,6 +16,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.lehman.android.Downloader;
+import com.lehman.android.R;
+import com.lehman.android.R.layout;
 import com.lehman.android.utils.CacheManager;
 import com.lehman.android.utils.Either;
 

@@ -1,4 +1,4 @@
-package com.lehman.android;
+package com.lehman.android.adapter;
 
 public class ImageToFileAdapterWithAsyncTask {
 

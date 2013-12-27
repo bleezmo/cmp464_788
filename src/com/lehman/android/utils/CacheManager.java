@@ -58,16 +58,14 @@ public class CacheManager {
 		return writeToFile(new File(filename),is);
 	}
  	public synchronized Either<File> writeToFile(File file, InputStream is){
-		if(totalWritten > MAX_SIZE) {
-			cleanUp();
-		}
+		if(!file.exists() || !file.canWrite()) 
+			return new Failure<File>(new RuntimeException("file does not exist or cannot write to file"));
+		if(totalWritten > MAX_SIZE) cleanUp();
  		CacheFile cacheFile = null;
  		for(int i = 0; i < files.size(); i++){
  			if(files.get(i).filepath == file.getPath()) cacheFile = files.get(i);
  		}
  		if(cacheFile == null) return new Failure<File>(new RuntimeException("no file found in cache"));
-		if(!file.exists() || !file.canWrite()) 
-			return new Failure<File>(new RuntimeException("file does not exist or cannot write to file"));
 		BufferedInputStream bis = new BufferedInputStream(is,5000);
 		try {
 			FileOutputStream fis = new FileOutputStream(file);
@@ -94,27 +92,35 @@ public class CacheManager {
 	private void cleanUp(){
 		int pi = 0; //priority index
 		if(totalWritten < MAX_SIZE) return;
-		Log.i("CacheManager","running clean up. totalWritten is "+totalWritten);
 		while(totalWritten > (MAX_SIZE/2) && pi < maxPriority){
-			ArrayList<CacheFile> priorityFiles = new ArrayList<CacheFile>();
-			long cutSize = 0;
-			for(int i = 0; i < files.size(); i++){
-				CacheFile cacheFile = files.get(i);
-				if((totalWritten-cutSize) < (MAX_SIZE/2)){
-					break;
-				}else if(cacheFile.priority <= pi){
-					priorityFiles.add(cacheFile);
-					cutSize += cacheFile.size;
-				}
-			}
-			removeFiles(priorityFiles);
-			Log.i("CacheManager","after clean run, totalWritten is now "+totalWritten);
+			cleanUp(pi,2);
 			pi++;
 		}
 	}
-	private void removeFiles(ArrayList<CacheFile> cutFiles){
-		for(int i = 0; i < cutFiles.size(); i++){
-			removeFile(cutFiles.get(i));
+	public synchronized void cleanAll(){
+		int pi = 0; //priority index
+		while(totalWritten > MAX_SIZE && pi < maxPriority){
+			cleanUp(pi,1);
+			pi++;
+		}
+	}
+	public synchronized void cleanAll(int priority){
+		cleanUp(priority,1);
+	}
+	private void cleanUp(int priority, int divisor){
+		ArrayList<CacheFile> priorityFiles = new ArrayList<CacheFile>();
+		long cutSize = 0;
+		for(int i = 0; i < files.size(); i++){
+			CacheFile cacheFile = files.get(i);
+			if((totalWritten-cutSize) < (MAX_SIZE/divisor)){
+				break;
+			}else if(cacheFile.priority <= priority){
+				priorityFiles.add(cacheFile);
+				cutSize += cacheFile.size;
+			}
+		}
+		for(int i = 0; i < priorityFiles.size(); i++){
+			removeFile(priorityFiles.get(i));
 		}
 	}
 	private void removeFile(CacheFile cacheFile){
@@ -126,18 +132,5 @@ public class CacheManager {
 			}
 		}
 		totalWritten -= cacheFile.size;
-	}
-	/**
-	 * removes all priority 0 files
-	 */
-	public synchronized void purge(){
-		ArrayList<CacheFile> cutFiles = new ArrayList<CacheFile>();
-		for(int i = 0; i < files.size(); i++){
-			CacheFile file = files.get(i);
-			if(file.priority == 0) {
-				cutFiles.add(files.get(i));
-			}
-		}
-		removeFiles(cutFiles);
 	}
 }

@@ -1,4 +1,4 @@
-package com.lehman.android.rss;
+package com.lehman.android;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -11,6 +11,7 @@ import java.net.URL;
 import java.nio.ByteBuffer;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.lehman.android.utils.*;
 
@@ -33,33 +34,49 @@ public class Downloader {
 			return new Failure<StringBuffer>(e);
 		}
 	}
-	public static final Either<ByteBuffer> downloadBytes(String strUrl){
+	public static final Either<byte[]> downloadBytes(String strUrl){
 		try {
 			URL url = new URL(strUrl);
-			ByteBuffer bb = ByteBuffer.allocate(256);
+			ByteBuffer bb = ByteBuffer.allocate(1000);
 			BufferedInputStream in = new BufferedInputStream(url.openStream());
-			int available = in.available();
-			while(available > 0){
-				if(bb.remaining() < available) bb = resizeByteBuffer(bb,available * 2);
-				byte[] buf = new byte[available];
-				in.read(buf);
+			int more = 0;
+			while(more > -1){
+				int available = in.available();
+				if(bb.remaining() < available){
+					bb = resizeByteBuffer(bb,available * 2);
+				}
+				byte[] buf;
+				if(available > 0){
+					buf = new byte[available];
+				}else{
+					buf = new byte[1];
+				}
+				more = in.read(buf);
 				bb.put(buf);
-				available = in.available();
 			}
-			return new Success<ByteBuffer>(bb);
+			bb.flip();
+			byte[] array = new byte[bb.limit()];
+			bb.get(array);
+			return new Success<byte[]>(array);
 		} catch (MalformedURLException e) {
-			return new Failure<ByteBuffer>(e);
+			return new Failure<byte[]>(e);
 		} catch (IOException e) {
-			return new Failure<ByteBuffer>(e);
+			return new Failure<byte[]>(e);
 		}
 	}
 	private static final ByteBuffer resizeByteBuffer(ByteBuffer bb, int extra){
 		ByteBuffer newbb = ByteBuffer.allocate(bb.capacity()+extra);
-		return newbb.put(bb);
+		newbb.put(bb.array(), 0, bb.position());
+		return newbb;
 	}
 	public static final Either<File> downloadBytesToFile(String strUrl, CacheManager cm){
 		try {
-			return cm.writeToFile(cm.newCachedFile(), new URL(strUrl).openStream());
+			Either<File> cachedFile = cm.newCachedFile();
+			if(cachedFile.isSuccess()){
+				return cm.writeToFile(cachedFile.getObject(), new URL(strUrl).openStream());
+			}else{
+				return cachedFile;
+			}
 		} catch (MalformedURLException e) {
 			return new Failure<File>(e);
 		} catch (IOException e) {

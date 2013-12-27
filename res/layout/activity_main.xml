@@ -8,5 +8,22 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context=".MainActivity" >
-
+	<TextView
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="Here's mah image that I downloaded"
+	    />
+	<Button
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="Go to list of images"
+	    android:onClick="toImageList"
+	    />
+	<ImageView 
+	    android:id="@+id/myimage"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:scaleType="fitXY"
+	    android:contentDescription="image to be downloaded from interwebz"
+	    />
 </LinearLayout>

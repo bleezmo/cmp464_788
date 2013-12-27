@@ -99,20 +99,20 @@ public class CacheManager {
 	}
 	public synchronized void cleanAll(){
 		int pi = 0; //priority index
-		while(totalWritten > MAX_SIZE && pi < maxPriority){
-			cleanUp(pi,1);
+		while(pi < maxPriority){
+			cleanUp(pi,0);
 			pi++;
 		}
 	}
 	public synchronized void cleanAll(int priority){
-		cleanUp(priority,1);
+		cleanUp(priority,0);
 	}
 	private void cleanUp(int priority, int divisor){
 		ArrayList<CacheFile> priorityFiles = new ArrayList<CacheFile>();
 		long cutSize = 0;
 		for(int i = 0; i < files.size(); i++){
 			CacheFile cacheFile = files.get(i);
-			if((totalWritten-cutSize) < (MAX_SIZE/divisor)){
+			if(divisor > 0 && (totalWritten-cutSize) < (MAX_SIZE/divisor)){
 				break;
 			}else if(cacheFile.priority <= priority){
 				priorityFiles.add(cacheFile);

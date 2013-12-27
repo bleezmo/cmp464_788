@@ -1,4 +1,4 @@
-package com.lehman.android.adapter;
+package com.lehman.android.adapters;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,10 +16,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.lehman.android.Downloader;
 import com.lehman.android.R;
 import com.lehman.android.R.layout;
 import com.lehman.android.utils.CacheManager;
+import com.lehman.android.utils.Downloader;
 import com.lehman.android.utils.Either;
 
 public class ImageToFileAdapterWithQueue extends BaseAdapter{

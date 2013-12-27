@@ -1,5 +1,8 @@
 package com.lehman.android;
 
+import com.lehman.android.adapters.ByteImageAdapter;
+import com.lehman.android.adapters.ImageToFileAdapter;
+import com.lehman.android.adapters.ImageToFileAdapterWithQueue;
 import com.lehman.android.utils.CacheManager;
 
 import android.app.Activity;
@@ -15,10 +18,10 @@ public class LotsOfImages extends Activity{
 		setContentView(R.layout.multiple_images);
         cm = new CacheManager(getCacheDir().toString());
 		ListView lv = (ListView) findViewById(R.id.imagelist);
-		int imageCount = 500;
-		//lv.setAdapter(new ByteImageAdapter(ctx,imageCount));
-		//lv.setAdapter(new ImageToFileAdapter(ctx,cm,imageCount));
-		//lv.setAdapter(new ImageToFileAdapterWithQueue(ctx,cm,imageCount));
+		int imageCount = 50;
+		//lv.setAdapter(new ByteImageAdapter(this,imageCount));
+		//lv.setAdapter(new ImageToFileAdapter(this,cm,imageCount));
+		//lv.setAdapter(new ImageToFileAdapterWithQueue(this,cm,imageCount));
 	}
 
 	@Override

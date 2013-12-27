@@ -1,4 +1,4 @@
-package com.lehman.android;
+package com.lehman.android.utils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -16,29 +16,11 @@ import android.util.Log;
 import com.lehman.android.utils.*;
 
 public class Downloader {
-	public static final Either<StringBuffer> downloadText(String strUrl){
-		try {
-			URL url = new URL(strUrl);
-			BufferedReader in = new BufferedReader(
-					new InputStreamReader(url.openStream()));
-			StringBuffer sb = new StringBuffer();
-			String line = in.readLine();
-			while(line != null){
-				sb.append(sb);
-				line = in.readLine();
-			}
-			return new Success<StringBuffer>(sb);
-		} catch (MalformedURLException e) {
-			return new Failure<StringBuffer>(e);
-		} catch (IOException e) {
-			return new Failure<StringBuffer>(e);
-		}
-	}
 	public static final Either<byte[]> downloadBytes(String strUrl){
 		try {
 			URL url = new URL(strUrl);
 			ByteBuffer bb = ByteBuffer.allocate(1000);
-			BufferedInputStream in = new BufferedInputStream(url.openStream());
+			BufferedInputStream in = new BufferedInputStream(url.openStream(),5000);
 			int more = 0;
 			while(more > -1){
 				int available = in.available();

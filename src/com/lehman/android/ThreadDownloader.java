@@ -1,17 +1,15 @@
 package com.lehman.android;
 
-import java.io.File;
-
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.lehman.android.utils.Downloader;
 import com.lehman.android.utils.Either;
 
-public class Lesson1 {
-
+public class ThreadDownloader {
 	public static final void run(final Activity ctx){
 		new Thread(new Runnable(){
 			@Override

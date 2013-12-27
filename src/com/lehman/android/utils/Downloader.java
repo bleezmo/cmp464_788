@@ -1,4 +1,4 @@
-package com.lehman.android;
+package com.lehman.android.utils;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -68,19 +68,5 @@ public class Downloader {
 		ByteBuffer newbb = ByteBuffer.allocate(bb.capacity()+extra);
 		newbb.put(bb.array(), 0, bb.position());
 		return newbb;
-	}
-	public static final Either<File> downloadBytesToFile(String strUrl, CacheManager cm){
-		try {
-			Either<File> cachedFile = cm.newCachedFile();
-			if(cachedFile.isSuccess()){
-				return cm.writeToFile(cachedFile.getObject(), new URL(strUrl).openStream());
-			}else{
-				return cachedFile;
-			}
-		} catch (MalformedURLException e) {
-			return new Failure<File>(e);
-		} catch (IOException e) {
-			return new Failure<File>(e);
-		}
 	}
 }

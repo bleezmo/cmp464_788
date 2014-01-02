@@ -9,18 +9,19 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.lehman.android.utils.Either;
 import com.lehman.android.utils.Failure;
 import com.lehman.android.utils.Success;
 
-public class GetCoolMessageTask extends AsyncTask<Void,Either<String>,Either<String>>{
+public class GetCoolMessageTask extends AsyncTask<Void,Void,Either<CoolMessage>>{
 	private CoolMessageCallback coolMessageCallback;
 	public GetCoolMessageTask(CoolMessageCallback coolMessageCallback){
 		this.coolMessageCallback = coolMessageCallback;
 	}
 	@Override
-	protected Either<String> doInBackground(Void... params) {
+	protected Either<CoolMessage> doInBackground(Void... params) {
 		HttpURLConnection urlConnection = null;
 		Either<String> optid;
 		try {
@@ -29,13 +30,12 @@ public class GetCoolMessageTask extends AsyncTask<Void,Either<String>,Either<Str
 			optid = getResponseContents(urlConnection);
 			urlConnection = null;
 		}catch(MalformedURLException e){
-			return new Failure<String>(e);
+			return new Failure<CoolMessage>(e);
 		}catch (IOException e) {
-			return new Failure<String>(e);
+			return new Failure<CoolMessage>(e);
 		}finally{
 			if(urlConnection != null) urlConnection.disconnect();
 		}
-		publishProgress(optid);
 		if(optid.isSuccess()){
 			String id = optid.getObject();
 			try {
@@ -49,18 +49,20 @@ public class GetCoolMessageTask extends AsyncTask<Void,Either<String>,Either<Str
 				}
 				Either<String> coolMessage = getResponseContents(urlConnection);
 				urlConnection = null;
-				return coolMessage;
+				if(coolMessage.isSuccess()) 
+					return new Success<CoolMessage>(new CoolMessage(id,coolMessage.getObject()));
+				else return new Failure<CoolMessage>(coolMessage.getError());
 			}catch(MalformedURLException e){
-				return new Failure<String>(e);
+				return new Failure<CoolMessage>(e);
 			}catch (IOException e) {
-				return new Failure<String>(e);
+				return new Failure<CoolMessage>(e);
 			} catch (InterruptedException e) {
-				return new Failure<String>(e);
+				return new Failure<CoolMessage>(e);
 			}finally{
 				if(urlConnection != null) urlConnection.disconnect();
 			}
 		}else{
-			return optid;
+			return new Failure<CoolMessage>(optid.getError());
 		}
 	}
 	private static final Either<String> getResponseContents(HttpURLConnection urlConnection){
@@ -71,7 +73,7 @@ public class GetCoolMessageTask extends AsyncTask<Void,Either<String>,Either<Str
 			StringBuffer sb = new StringBuffer();
 			String line = in.readLine();
 			while(line != null){
-				sb.append(sb);
+				sb.append(line);
 				line = in.readLine();
 			}
 			return new Success<String>(sb.toString());
@@ -82,12 +84,7 @@ public class GetCoolMessageTask extends AsyncTask<Void,Either<String>,Either<Str
 		}
 	}
 	@Override
-	protected void onProgressUpdate(Either<String>... values) {
-		Either<String> optid = values[0];
-		coolMessageCallback.onIdReceived(optid);
-	}
-	@Override
-	protected void onPostExecute(Either<String> result) {
+	protected void onPostExecute(Either<CoolMessage> result) {
 		coolMessageCallback.onCoolMessageReceived(result);
 	}
 	

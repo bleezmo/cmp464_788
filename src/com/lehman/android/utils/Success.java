@@ -23,4 +23,8 @@ public class Success<T> implements Either<T>{
 	public Throwable getError() {
 		return null;
 	}
+	@Override
+	public String toString(){
+		return obj.toString();
+	}
 }

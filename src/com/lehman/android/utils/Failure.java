@@ -23,5 +23,8 @@ public class Failure<T> implements Either<T>{
 	public Throwable getError() {
 		return e;
 	}
-
+	@Override
+	public String toString(){
+		return e.getMessage();
+	}
 }

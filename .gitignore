@@ -26,3 +26,5 @@ proguard/
 .settings
 .classpath
 .project
+.metadata/
+.log

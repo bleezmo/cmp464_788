@@ -10,6 +10,7 @@
     tools:context=".MainActivity" >
 
     <TextView
+        android:id="@+id/output_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hi I'm a TextView" />   
@@ -18,49 +19,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hi I'm a button"
+        android:onClick="showToast"
         />
     
     <EditText
+        android:id="@+id/input_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="I'm an EditText. You can edit text in here"
+        android:inputType="text"
         />
-    
-    <CheckBox
+    <Button 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="I'm a check box"
+        android:text="show favorite planet"
+        android:onClick="showPlanet"
         />
-	
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Below is a Radio Grouping"
-        />
-    <RadioGroup
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:orientation="vertical">
-    	<RadioButton
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:text="I'm button 2"
-        	/>
-    	<RadioButton
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:text="I'm button 1"
-        	/>
-	</RadioGroup>
-	<ToggleButton 
-	    android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:textOn="I'm a toggle button in the on state"
-    	android:textOff="I'm a toggle button in the off state"
-	    />
-	<Spinner
-	    android:id="@+id/myspinner"
-    	android:layout_width="fill_parent"
-    	android:layout_height="wrap_content" 
-    	/>
 </LinearLayout>

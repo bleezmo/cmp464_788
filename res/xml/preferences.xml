@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<CheckBoxPreference
+        android:key="pref_checkbox"
+        android:title="This is my checkbox preference"
+        android:summary="summary for checkbox"
+        android:defaultValue="true" />
+	<ListPreference
+        android:key="favorite_planets"
+        android:title="This is my list preference"
+        android:dialogTitle="list in dialog"
+        android:entries="@array/planets_array"
+        android:entryValues="@array/planets_array"
+        android:defaultValue="Mercury" />
+</PreferenceScreen>

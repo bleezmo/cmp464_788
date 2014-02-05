@@ -1,2 +1,3 @@
-* [Layouts](https://github.com/bleezmo/cmp464_788/wiki/Layouts)
-* [Layout Types](https://github.com/bleezmo/cmp464_788/wiki/Layout-Types)
+* [EditText documentation](http://developer.android.com/guide/topics/ui/controls/text.html)
+* [Button documentation](http://developer.android.com/reference/android/widget/Button.html)
+* [Preferences and Settings](http://developer.android.com/guide/topics/ui/settings.html)

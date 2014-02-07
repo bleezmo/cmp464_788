@@ -6,61 +6,21 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hi I'm a TextView" />   
-    
-    <Button 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hi I'm a button"
-        />
-    
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="I'm an EditText. You can edit text in here"
-        />
-    
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="I'm a check box"
-        />
-	
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Below is a Radio Grouping"
-        />
-    <RadioGroup
-    	android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:orientation="vertical">
-    	<RadioButton
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:text="I'm button 2"
-        	/>
-    	<RadioButton
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-        	android:text="I'm button 1"
-        	/>
-	</RadioGroup>
-	<ToggleButton 
-	    android:layout_width="wrap_content"
-    	android:layout_height="wrap_content"
-    	android:textOn="I'm a toggle button in the on state"
-    	android:textOff="I'm a toggle button in the off state"
+	<fragment 
+	    android:id="@+id/rss_list_fragment"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        class="com.lehman.android.RssListFragment" ></fragment>
 	    />
-	<Spinner
-	    android:id="@+id/myspinner"
-    	android:layout_width="fill_parent"
-    	android:layout_height="wrap_content" 
-    	/>
+	<fragment 
+	    android:id="@+id/rss_details_fragment"
+	    android:layout_width="0dp"
+	    android:layout_weight="2"
+	    android:layout_height="match_parent"
+	    class="com.lehman.android.RssDetailsFragment"></fragment>
+	    />
 </LinearLayout>

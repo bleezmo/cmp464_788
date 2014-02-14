@@ -9,4 +9,11 @@
         android:layout_weight="1"
         android:layout_height="match_parent"
         android:name="com.lehman.android.RssListFragment" />
+	
+	<fragment 
+	    android:id="@+id/rss_details_fragment"
+	    android:layout_width="0dp"
+	    android:layout_weight="2"
+	    android:layout_height="match_parent"
+	    android:name="com.lehman.android.RssDetailsFragment" />
 </LinearLayout>

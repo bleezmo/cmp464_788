@@ -2,11 +2,12 @@ package com.lehman.android;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {

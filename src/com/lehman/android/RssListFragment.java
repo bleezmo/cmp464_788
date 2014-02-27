@@ -3,6 +3,7 @@ package com.lehman.android;
 import com.lehman.android.Global.ListItem;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,8 +42,10 @@ public class RssListFragment extends ListFragment{
 			//first, show that the list item was clicked
 			getListView().setItemChecked(i, true);
 			RssDetailsFragment detailsFragment = (RssDetailsFragment) getFragmentManager().findFragmentById(R.id.rss_details_fragment);
-			if(detailsFragment == null){
-				
+			if(detailsFragment == null || detailsFragment.currentListItemIndex() != i){
+				detailsFragment = RssDetailsFragment.newInstance(i);
+				FragmentTransaction transaction = getFragmentManager().beginTransaction();
+				transaction.replace(R.id.rss_details, arg1)
 			}
 		}
 	}

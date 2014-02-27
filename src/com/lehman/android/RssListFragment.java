@@ -2,6 +2,7 @@ package com.lehman.android;
 
 import com.lehman.android.Global.ListItem;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
@@ -45,8 +46,12 @@ public class RssListFragment extends ListFragment{
 			if(detailsFragment == null || detailsFragment.currentListItemIndex() != i){
 				detailsFragment = RssDetailsFragment.newInstance(i);
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
-				transaction.replace(R.id.rss_details, arg1)
+				transaction.replace(R.id.rss_details_fragment, detailsFragment);
+				transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+				transaction.commit();
 			}
+		}else{
+			Intent intent = new Intent(this.getActivity(),RssDetailsFragment.class);
 		}
 	}
 	

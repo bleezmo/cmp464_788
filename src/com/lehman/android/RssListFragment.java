@@ -33,9 +33,7 @@ public class RssListFragment extends ListFragment{
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		if(dualPaneMode){
-			showDetails(position);
-		}
+		showDetails(position);
 	}
 	
 	private void showDetails(int i) {
@@ -47,11 +45,13 @@ public class RssListFragment extends ListFragment{
 				detailsFragment = RssDetailsFragment.newInstance(i);
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
 				transaction.replace(R.id.rss_details_fragment, detailsFragment);
-				transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+				transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 				transaction.commit();
 			}
 		}else{
-			Intent intent = new Intent(this.getActivity(),RssDetailsFragment.class);
+			Intent intent = new Intent(this.getActivity(),DetailsActivity.class);
+			intent.putExtra("index", i);
+			startActivity(intent);
 		}
 	}
 	

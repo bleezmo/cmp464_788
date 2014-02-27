@@ -12,8 +12,8 @@ public class DetailsActivity extends FragmentActivity{
 		super.onCreate(savedInstanceState);
 		RssDetailsFragment fragment = new RssDetailsFragment();
 		fragment.setArguments(getIntent().getExtras());
-		FragmentTransaction ft = this.get.beginTransaction();
-		ft.add(0, fragment, "rss_details");
+		FragmentTransaction ft = this.getSupportFragmentManager().beginTransaction();
+		ft.add(android.R.id.content, fragment, "rss_details").commit();
 	}
 
 }

@@ -48,6 +48,7 @@ public class MainActivity extends FragmentActivity {
 					}
 				});
             	marker.showInfoWindow();
+            	mMap.setMyLocationEnabled(true);
             }
         }
     }
